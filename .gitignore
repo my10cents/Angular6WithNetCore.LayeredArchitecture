@@ -1,0 +1,9 @@
+acme.api/bin 
+acme.api/obj 
+acme.business/bin 
+acme.business/obj 
+acme.data/bin 
+acme.data/obj 
+acme.data/node_modules.vs 
+.vs 
+Acme.Web/package-lock.json 

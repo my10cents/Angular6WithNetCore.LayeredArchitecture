@@ -1,0 +1,2 @@
+# Angular 6 With NetCore 2.1 - Layered Architecture
+Proposal of a layered architecture using Asp.Net WebApi Core 2.1, Angular 6,  Entity Framework Core 2.1, EFCore fluent mapping entities by extension on separated files, repositories by extensions of DbSet&lt;> and using concepts of Domain Driven Design.
