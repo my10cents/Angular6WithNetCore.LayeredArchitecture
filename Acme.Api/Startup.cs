@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Acme.Api.AppConfig;
 using Acme.Business.Data;
 using Acme.Data;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +28,11 @@ namespace Acme.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Automapper Service
+            var config = new AutoMapper.MapperConfiguration(cfg => cfg.AddProfile(new AutoMapperConfig()));
+            services.AddSingleton(config.CreateMapper());
+
+            //DbContext Service
             var conStr = Configuration.GetConnectionString("SchoolDatabase");
             services.AddDbContext<ISchoolContext, SchoolContext>(options => options.UseSqlServer(conStr));
 

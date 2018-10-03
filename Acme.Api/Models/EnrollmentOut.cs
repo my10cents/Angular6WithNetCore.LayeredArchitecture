@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Acme.Api.Entities
+namespace Acme.Api.Models
 {
-    public partial class Enrollment
+    public partial class EnrollmentOut
     {
         public int Id { get; set; }
         public int? CourseId { get; set; }
         public int? StudentId { get; set; }
         public string Grade { get; set; }
 
-        public Course Course { get; set; }
-        public Student Student { get; set; }
+        public CourseOut Course { get; set; }
+        public StudentOut Student { get; set; }
     }
 }

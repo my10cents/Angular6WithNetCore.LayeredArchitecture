@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Acme.Api.Entities
+namespace Acme.Api.Models
 {
-    public partial class Course
+    public partial class CourseOut
     {
-        public Course()
+        public CourseOut()
         {
-            Enrollment = new HashSet<Enrollment>();
+            Enrollment = new HashSet<EnrollmentOut>();
         }
 
         public int Id { get; set; }
         public string Title { get; set; }
         public int? Credits { get; set; }
 
-        public ICollection<Enrollment> Enrollment { get; set; }
+        public ICollection<EnrollmentOut> Enrollment { get; set; }
     }
 }

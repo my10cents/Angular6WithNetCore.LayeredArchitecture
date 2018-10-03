@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Acme.Business.Entities;
 using Acme.Data;
 using Acme.Business.Data;
+using AutoMapper;
+using Acme.Api.Models;
 
 namespace Acme.Api.Controllers
 {
@@ -16,17 +18,21 @@ namespace Acme.Api.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly ISchoolContext _context;
+        private readonly IMapper _mapper;
 
-        public StudentsController(ISchoolContext context)
+        public StudentsController(ISchoolContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Students
         [HttpGet]
-        public IEnumerable<Student> GetStudent()
+        public IEnumerable<StudentOut> GetStudent()
         {
-            return _context.Student;
+            var response = _context.Student.Include(e => e.Enrollment).ToList();
+            var result = _mapper.Map<List<Student>, List<StudentOut>>(response);
+            return result;
         }
 
         // GET: api/Students/5

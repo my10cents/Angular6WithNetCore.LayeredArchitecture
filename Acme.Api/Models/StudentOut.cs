@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Acme.Api.Entities
+namespace Acme.Api.Models
 {
-    public partial class Student
+    public partial class StudentOut
     {
-        public Student()
+        public StudentOut()
         {
-            Enrollment = new HashSet<Enrollment>();
+            Enrollment = new HashSet<EnrollmentOut>();
         }
 
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace Acme.Api.Entities
         public string FirstMidName { get; set; }
         public DateTime? EnrollmentDate { get; set; }
 
-        public ICollection<Enrollment> Enrollment { get; set; }
+        public ICollection<EnrollmentOut> Enrollment { get; set; }
     }
 }
