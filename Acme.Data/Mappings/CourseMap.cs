@@ -7,13 +7,13 @@ using System.Text;
 
 namespace Acme.Data.Mappings
 {
-    public class CourseMap : EFMap<Course>
+    public class CourseMap : IEntityTypeConfiguration<Course>
     {
-        public override void Map(EntityTypeBuilder<Course> entity)
+        public void Configure(EntityTypeBuilder<Course> builder)
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            builder.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.Property(e => e.Title)
+            builder.Property(e => e.Title)
                 .HasMaxLength(100)
                 .IsUnicode(false);
         }

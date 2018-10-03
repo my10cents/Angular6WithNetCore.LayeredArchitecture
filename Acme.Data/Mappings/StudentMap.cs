@@ -7,19 +7,19 @@ using System.Text;
 
 namespace Acme.Data.Mappings
 {
-    public class StudentMap : EFMap<Student>
+    public class StudentMap : IEntityTypeConfiguration<Student>
     {
-        public override void Map(EntityTypeBuilder<Student> entity)
+        public void Configure(EntityTypeBuilder<Student> builder)
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            builder.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.Property(e => e.EnrollmentDate).HasColumnType("datetime");
+            builder.Property(e => e.EnrollmentDate).HasColumnType("datetime");
 
-            entity.Property(e => e.FirstMidName)
+            builder.Property(e => e.FirstMidName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.Property(e => e.LastName)
+            builder.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
         }

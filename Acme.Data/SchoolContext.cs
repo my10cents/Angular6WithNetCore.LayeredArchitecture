@@ -33,9 +33,9 @@ namespace Acme.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.AddMapping(new CourseMap());
-            modelBuilder.AddMapping(new EnrollmentMap());
-            modelBuilder.AddMapping(new StudentMap());
+            modelBuilder.ApplyConfiguration(new CourseMap());
+            modelBuilder.ApplyConfiguration(new EnrollmentMap());
+            modelBuilder.ApplyConfiguration(new StudentMap());
         }
     }
 

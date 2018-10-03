@@ -7,26 +7,26 @@ using System.Text;
 
 namespace Acme.Data.Mappings
 {
-    public class EnrollmentMap : EFMap<Enrollment>
+    public class EnrollmentMap : IEntityTypeConfiguration<Enrollment>
     {
-        public override void Map(EntityTypeBuilder<Enrollment> entity)
+        public void Configure(EntityTypeBuilder<Enrollment> builder)
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            builder.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.Property(e => e.CourseId).HasColumnName("CourseID");
+            builder.Property(e => e.CourseId).HasColumnName("CourseID");
 
-            entity.Property(e => e.Grade)
+            builder.Property(e => e.Grade)
                 .HasMaxLength(1)
                 .IsUnicode(false);
 
-            entity.Property(e => e.StudentId).HasColumnName("StudentID");
+            builder.Property(e => e.StudentId).HasColumnName("StudentID");
 
-            entity.HasOne(d => d.Course)
+            builder.HasOne(d => d.Course)
                 .WithMany(p => p.Enrollment)
                 .HasForeignKey(d => d.CourseId)
                 .HasConstraintName("FK_Enrollment_Course");
 
-            entity.HasOne(d => d.Student)
+            builder.HasOne(d => d.Student)
                 .WithMany(p => p.Enrollment)
                 .HasForeignKey(d => d.StudentId)
                 .HasConstraintName("FK_Enrollment_Student");
