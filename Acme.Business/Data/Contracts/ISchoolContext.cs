@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Acme.Business.Data
+namespace Acme.Business.Data.Contracts
 {
     public interface ISchoolContext : IDbContext
     {

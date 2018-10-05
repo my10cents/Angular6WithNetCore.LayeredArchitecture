@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Acme.Business.Data
+namespace Acme.Business.Data.Contracts
 {
     public interface IDbContext
     {

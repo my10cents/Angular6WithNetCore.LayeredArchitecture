@@ -1,4 +1,4 @@
-﻿using Acme.Business.Data;
+﻿using Acme.Business.Data.Contracts;
 using Acme.Business.Entities;
 using Acme.Data.Mappings;
 using Microsoft.EntityFrameworkCore;

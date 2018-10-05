@@ -12,9 +12,9 @@ namespace Acme.Api.AppConfig
     {
         public AutoMapperConfig()
         {
-            CreateMap<Enrollment, EnrollmentOut>();
-            CreateMap<Course, CourseOut>();
-            CreateMap<Student, StudentOut>();
+            CreateMap<Enrollment, EnrollmentOut>().ReverseMap();
+            CreateMap<Course, CourseOut>().ReverseMap();
+            CreateMap<Student, StudentOut>().ReverseMap();
             CreateMap(typeof(List<>), typeof(List<>)).ConvertUsing(typeof(ConvertList<,>));
         }
 

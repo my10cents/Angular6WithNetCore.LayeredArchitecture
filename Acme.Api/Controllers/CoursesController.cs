@@ -7,7 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Acme.Business.Entities;
 using Acme.Data;
-using Acme.Business.Data;
+using Acme.Business.Data.Contracts;
+using Acme.Business.Repositories;
+using Acme.Business.Services;
+using Acme.Business.Data.BusinessContracts;
+using Acme.Api.Models;
+using AutoMapper;
 
 namespace Acme.Api.Controllers
 {
@@ -16,17 +21,23 @@ namespace Acme.Api.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly ISchoolContext _context;
+        private readonly ICourseBusiness _courseBusiness;
+        private readonly IMapper _mapper;
 
-        public CoursesController(ISchoolContext context)
+        public CoursesController(ISchoolContext context, ICourseBusiness courseBusiness, IMapper mapper)
         {
             _context = context;
+            _courseBusiness = courseBusiness;
+            _mapper = mapper;
         }
 
         // GET: api/Courses
         [HttpGet]
-        public IEnumerable<Course> GetCourse()
+        public IEnumerable<CourseOut> GetCourse()
         {
-            return _context.Course;
+            List<Course> list = _context.Course.GetAll();
+            List<CourseOut> result = _mapper.Map<List<CourseOut>>(list);
+            return result;
         }
 
         // GET: api/Courses/5
@@ -38,7 +49,7 @@ namespace Acme.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var course = await _context.Course.FindAsync(id);
+            var course = await _context.Course.GetAsyncById(id);
 
             if (course == null)
             {
@@ -92,7 +103,7 @@ namespace Acme.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Course.Add(course);
+            _courseBusiness.Add(course);
             try
             {
                 await _context.SaveChangesAsync();
@@ -121,7 +132,8 @@ namespace Acme.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var course = await _context.Course.FindAsync(id);
+            //var course = await _context.Course.FindAsync(id);
+            var course = await _context.Course.GetAsyncById(id);
             if (course == null)
             {
                 return NotFound();

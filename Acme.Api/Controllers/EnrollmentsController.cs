@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Acme.Business.Entities;
 using Acme.Data;
-using Acme.Business.Data;
+using Acme.Business.Data.Contracts;
 
 namespace Acme.Api.Controllers
 {
