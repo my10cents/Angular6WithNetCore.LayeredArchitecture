@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Acme.Business.Entities;
-using Acme.Data;
 using Acme.Business.Data.Contracts;
-using Acme.Business.Repositories;
-using Acme.Business.Services;
 using Acme.Business.Data.BusinessContracts;
 using Acme.Api.Models;
 using AutoMapper;
@@ -20,9 +16,11 @@ namespace Acme.Api.Controllers
     [ApiController]
     public class CoursesController : ControllerBase
     {
+
         private readonly ISchoolContext _context;
         private readonly ICourseBusiness _courseBusiness;
         private readonly IMapper _mapper;
+
 
         public CoursesController(ISchoolContext context, ICourseBusiness courseBusiness, IMapper mapper)
         {
@@ -31,16 +29,16 @@ namespace Acme.Api.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Courses
+
         [HttpGet]
         public IEnumerable<CourseOut> GetCourse()
         {
-            List<Course> list = _context.Course.GetAll();
+            List<Course> list = _context.Course.ToList();
             List<CourseOut> result = _mapper.Map<List<CourseOut>>(list);
             return result;
         }
 
-        // GET: api/Courses/5
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCourse([FromRoute] int id)
         {
@@ -49,7 +47,7 @@ namespace Acme.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var course = await _context.Course.GetAsyncById(id);
+            var course = await _context.Course.FindAsync(id);
 
             if (course == null)
             {
@@ -59,7 +57,7 @@ namespace Acme.Api.Controllers
             return Ok(course);
         }
 
-        // PUT: api/Courses/5
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCourse([FromRoute] int id, [FromBody] Course course)
         {
@@ -94,7 +92,7 @@ namespace Acme.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Courses
+
         [HttpPost]
         public async Task<IActionResult> PostCourse([FromBody] Course course)
         {
@@ -123,7 +121,7 @@ namespace Acme.Api.Controllers
             return CreatedAtAction("GetCourse", new { id = course.Id }, course);
         }
 
-        // DELETE: api/Courses/5
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse([FromRoute] int id)
         {
@@ -132,8 +130,7 @@ namespace Acme.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            //var course = await _context.Course.FindAsync(id);
-            var course = await _context.Course.GetAsyncById(id);
+            var course = await _context.Course.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -145,9 +142,11 @@ namespace Acme.Api.Controllers
             return Ok(course);
         }
 
+
         private bool CourseExists(int id)
         {
             return _context.Course.Any(e => e.Id == id);
         }
+
     }
 }

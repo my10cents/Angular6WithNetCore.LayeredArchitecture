@@ -10,6 +10,7 @@ using Acme.Data;
 using Acme.Business.Data.Contracts;
 using AutoMapper;
 using Acme.Api.Models;
+using Acme.Business.Repositories;
 
 namespace Acme.Api.Controllers
 {
@@ -98,9 +99,11 @@ namespace Acme.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Student.Add(student);
+            //Method from the repository with validation
+            _context.Student.AddStudent(student);
             try
             {
+                
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)

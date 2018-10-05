@@ -2,6 +2,9 @@
 using Acme.Business.Data.Contracts;
 using Acme.Business.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Acme.Business.Services
 {
@@ -21,12 +24,18 @@ namespace Acme.Business.Services
             _ctx.Add(entity);
         }
 
-        public void Validations(Course model)
+        internal void Validations(Course entity)
         {
             if (true)  { throw new Exception("Message validation"); } /* Rules 1 */
             if (false) { throw new Exception("Message validation"); } /* Rules 2 */
             if (false) { throw new Exception("Message validation"); } /* Rules 3 */
         }
+
+        public IEnumerable<Course> GetAll()
+        {
+            return _ctx.Course;
+        }
+
 
     }
 }
