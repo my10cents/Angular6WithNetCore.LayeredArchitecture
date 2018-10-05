@@ -21,7 +21,7 @@ namespace Acme.Api.Controllers
         {
             _context = context;
         }
-
+        
         // GET: api/Enrollments
         [HttpGet]
         public IEnumerable<Enrollment> GetEnrollment()

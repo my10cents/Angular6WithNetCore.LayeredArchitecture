@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.Api.AppConfig;
+using Acme.Api.AppHelpers.Extensions;
+using Acme.Api.AppHelpers.Filters;
 using Acme.Business.Data.BusinessContracts;
 using Acme.Business.Data.Contracts;
 using Acme.Business.Services;
@@ -15,6 +17,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
+using static Acme.Api.AppHelpers.Constants.ProjectApiConstants;
 
 namespace Acme.Api
 {
@@ -30,19 +34,24 @@ namespace Acme.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Business service
+            //Database context Service
+            var conStr = Configuration.GetConnectionString("SchoolDatabase");
+            services.AddDbContext<ISchoolContext, SchoolContext>(options => options.UseSqlServer(conStr));
 
+            //Business services
             services.AddScoped<ICourseBusiness, CourseBusiness>();
 
             //Automapper Service
             var config = new AutoMapper.MapperConfiguration(cfg => cfg.AddProfile(new AutoMapperConfig()));
             services.AddSingleton(config.CreateMapper());
 
-            //DbContext Service
-            var conStr = Configuration.GetConnectionString("SchoolDatabase");
-            services.AddDbContext<ISchoolContext, SchoolContext>(options => options.UseSqlServer(conStr));
+            //Cors
+            services.AddCorsPolicy(AcmeCorsPolicyName);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc( options =>
+            {
+                options.Filters.Add<ApplicationExceptionFilter>();
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +61,7 @@ namespace Acme.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(AcmeCorsPolicyName);
             app.UseMvc();
         }
     }

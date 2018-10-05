@@ -10,6 +10,14 @@ namespace Acme.Api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+
+        // GET: api/values/throw
+        [HttpGet("throw")]
+        public void throwTest()
+        {
+            throw new NotImplementedException("teste filter error");
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
