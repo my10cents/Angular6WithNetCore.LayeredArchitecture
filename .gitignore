@@ -7,3 +7,5 @@ acme.data/obj
 acme.data/node_modules.vs 
 .vs 
 Acme.Web/package-lock.json 
+/Acme.Data.Test/bin/Debug/netcoreapp2.1
+/Acme.Data.Test/obj
